@@ -1,1 +1,1 @@
-# SprintWeek
+# <a href="Init.md">🛠️ **Установка и настройка**</a>
