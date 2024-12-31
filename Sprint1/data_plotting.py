@@ -2,6 +2,15 @@ import matplotlib.pyplot as plt
 import pandas as pd
 
 
+def calculate_and_display_average_price(data):
+    """
+    Расчет среднего значения цены на закрытии сессии за заданный период.
+    :param data: - DataFrame
+    :return: - возвращаем среднюю цену закрытия акций за заданный период
+    """
+    return data["Close"].mean()
+
+
 def create_and_save_plot(data, ticker, period, filename=None):
     plt.figure(figsize=(10, 6))
 

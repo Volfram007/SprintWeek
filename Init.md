@@ -1,11 +1,13 @@
 # 🛠️ **Установка и настройка**
 
 * Создание папки виртуального окружения
-  * `python -m venv venv`
+  ```bash 
+  python.exe -m venv venv
+  ```
 * Активация папки:
   ```bash 
-    .\venv\Scripts\activate
-    ```
+  .\venv\Scripts\activate
+  ```
 * Настраиваем *interpreter*
   ```bash
   python.exe -m pip install --upgrade pip
@@ -14,7 +16,9 @@
 ### *Зависимости и настройка*
 
 * Установить зависимости из requirements.txt
-    * `pip install -r requirements.txt`
+  ```bash
+  python.exe -m pip install -r requirements.txt
+  ```
 
 ### **Сохранить requirements:**
 

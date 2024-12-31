@@ -14,12 +14,12 @@ def main():
     )
 
     ticker = (
-        input("Введите тикер акции (например, «AAPL» для Apple Inc): ").strip()
-        or "AAPL"
+            input("Введите тикер акции (например, «AAPL» для Apple Inc): ").strip()
+            or "AAPL"
     )
     period = (
-        input("Введите период для данных (например, '1mo' для одного месяца): ").strip()
-        or "1mo"
+            input("Введите период для данных (например, '1mo' для одного месяца): ").strip()
+            or "1mo"
     )
 
     # Fetch stock data
@@ -30,6 +30,12 @@ def main():
 
     # Plot the data
     dplt.create_and_save_plot(stock_data, ticker, period)
+
+    # Вывод средней цены акции на закрытии
+    average_price = dplt.calculate_and_display_average_price(stock_data)
+    print(
+        f"Средняя цена акций {ticker} за период {period} составляет {round(average_price, 3)}"
+    )
 
 
 if __name__ == "__main__":
