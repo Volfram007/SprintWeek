@@ -1,12 +1,18 @@
 import matplotlib.pyplot as plt
 import pandas as pd
+import os
 
+# Путь к папке для сохранения изображений
+images_dir = "images"
+
+# Создаем папку, если она не существует
+os.makedirs(images_dir, exist_ok=True)
 
 def calculate_and_display_average_price(data):
     """
     Расчет среднего значения цены на закрытии сессии за заданный период.
-    :param data: - DataFrame
-    :return: - возвращаем среднюю цену закрытия акций за заданный период
+    :param data: DataFrame
+    :return: Возвращаем среднюю цену закрытия акций за заданный период.
     """
     return data["Close"].mean()
 
@@ -36,5 +42,7 @@ def create_and_save_plot(data, ticker, period, filename=None):
     if filename is None:
         filename = f"{ticker}_{period}_stock_price_chart.png"
 
-    plt.savefig(filename)
+    filepath = os.path.join(images_dir, filename)
+
+    plt.savefig(filepath)
     print(f"График сохранен как {filename}")
