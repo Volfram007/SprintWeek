@@ -16,6 +16,7 @@ def notify_if_strong_fluctuations(data, threshold=1):
     :param threshold: Порог колебаний в % процентах
     :return: Возвращаем True, если колебания превышают заданный порог, иначе False.
     """
+
     min_price = data['Close'].min()
     max_price = data['Close'].max()
 

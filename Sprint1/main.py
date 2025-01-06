@@ -2,16 +2,29 @@ import data_download as dd
 import data_plotting as dplt
 
 
-def input_text(text: str, default_text: str):
+def input_text(text: str, default_text: str, input_type: str = "str"):
     """
     Функция ввода команд и проверки выхода из программы
     :param text: текст для описания ввода команды
     :param default_text: команда по умолчанию
+    :param input_type: Тип ввода ("float" или "str") для проверки валидности
     """
-    result = input(text).strip() or default_text
-    if ["exit", "q", "quit"].count(result.lower()) > 0:
-        exit()
-    return result
+    while True:
+        result = input(text).strip() or default_text
+
+        # Проверка на команды выхода
+        if result.lower() in ["exit", "q", "quit"]:
+            exit()
+
+        # Проверка на валидность ввода
+        if input_type.lower() == "float":
+            try:
+                return float(result)
+            except ValueError:
+                print("Ошибка: введите число!")
+                continue
+
+        return result
 
 
 def main():
@@ -36,7 +49,7 @@ def main():
     )
 
     # Вывод превышения колебаний цены
-    threshold = float(input_text("Введите порог % колебания цены в данный период (дефолт, 5): ", "5"))
+    threshold = float(input_text("Введите порог % колебания цены в данный период (дефолт, 5): ", "5", "float"))
 
     fluctuations = dplt.notify_if_strong_fluctuations(stock_data, threshold)
 
