@@ -8,6 +8,25 @@ images_dir = "images"
 # Создаем папку, если она не существует
 os.makedirs(images_dir, exist_ok=True)
 
+
+def notify_if_strong_fluctuations(data, threshold=1):
+    """
+    Функция для оповещения пользователя о сильных колебаниях цен.
+    :param data: DataFrame
+    :param threshold: Порог колебаний в % процентах
+    :return: Возвращаем True, если колебания превышают заданный порог, иначе False.
+    """
+    min_price = data['Close'].min()
+    max_price = data['Close'].max()
+
+    # Расчёт колебания в процентах
+    res = (max_price - min_price) / min_price * 100
+    if res > threshold:
+        return res
+    else:
+        return 0
+
+
 def calculate_and_display_average_price(data):
     """
     Расчет среднего значения цены на закрытии сессии за заданный период.
