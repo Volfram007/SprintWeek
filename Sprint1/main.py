@@ -9,12 +9,19 @@ def input_text(text: str, default_text: str, input_type: str = "str"):
     :param default_text: команда по умолчанию
     :param input_type: Тип ввода ("float" или "str") для проверки валидности
     """
+    global UPDATE_FILE
     while True:
         result = input(text).strip() or default_text
 
         # Проверка на команды выхода
-        if result.lower() in ["exit", "q", "quit"]:
+        if result.lower() in ["exit", "q", "й", "quit"]:
             exit()
+
+        # Проверка на команду обновления локальных данных
+        if result.lower() in ["up", "update"]:
+            print(">> Локальные данные будут обновлены!")
+            UPDATE_FILE = True
+            continue
 
         # Проверка на валидность ввода
         if input_type.lower() == "float":
@@ -28,13 +35,15 @@ def input_text(text: str, default_text: str, input_type: str = "str"):
 
 
 def main():
+    global UPDATE_FILE
     print(f"Выход из программы: exit, q, quit.\n")
 
     ticker = input_text("Введите тикер акции (дефолт: «AAPL» для Apple Inc): ", "AAPL")
     period = input_text("Введите период для данных (дефолт: 1mo): ", "1mo")
 
     # Fetch stock data
-    stock_data = dd.fetch_stock_data(ticker, period)
+    stock_data = dd.fetch_stock_data(ticker, period, UPDATE_FILE)
+    UPDATE_FILE = False
 
     # Add moving average to the data
     stock_data = dd.add_moving_average(stock_data)
@@ -61,7 +70,9 @@ if __name__ == "__main__":
     print(f"Добро пожаловать в инструмент получения и построения графиков биржевых данных.\n"
           f"Вот несколько примеров биржевых тикеров, которые вы можете рассмотреть: AAPL (Apple Inc), GOOGL (Alphabet Inc), MSFT (Microsoft Corporation), AMZN (Amazon.com Inc), TSLA (Tesla Inc).\n"
           f"Общие периоды времени для данных о запасах включают: 1d, 5d, 1mo, 3mo, 6mo, 1y, 2y, 5y, 10y, с начала года, макс.\n"
+          f"Обновить локальные данные можно с помощью команды: [update, up]. \n"
           )
-
+    # Флаг обновления локальных данных тикета
+    UPDATE_FILE = False
     while True:
         main()
