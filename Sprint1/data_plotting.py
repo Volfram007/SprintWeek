@@ -1,5 +1,6 @@
 import matplotlib.pyplot as plt
 import pandas as pd
+
 import os
 
 # Путь к папке для сохранения изображений
@@ -37,7 +38,55 @@ def calculate_and_display_average_price(data):
     return data["Close"].mean()
 
 
+def save_rsi_plot(data, ticker, period, filename=None):
+    """
+    Создание и сохранение графика RSI.
+    :param data: DataFrame
+    :param ticker: торговая пара
+    :param period: торговый период
+    :param filename: имя файла для сохранения графика
+    :return:
+    """
+    plt.figure(figsize=(10, 6))
+
+    if "Date" not in data:
+        if pd.api.types.is_datetime64_any_dtype(data.index):
+            dates = data.index.to_numpy()
+            plt.plot(dates, data["RSI"].values, label="RSI")
+        else:
+            print("Информация о дате отсутствует или не имеет распознаваемого формата.")
+            return
+    else:
+        if not pd.api.types.is_datetime64_any_dtype(data["Date"]):
+            data["Date"] = pd.to_datetime(data["Date"])
+        plt.plot(data["Date"], data["RSI"], label="RSI")
+
+    plt.title(f"{ticker} RSI ({period} период)")
+    plt.xlabel("Дата")
+    plt.ylabel("RSI")
+    plt.axhline(70, color='red', linestyle='--', label='Перекупленность (70)')
+    plt.axhline(30, color='green', linestyle='--', label='Перепроданность (30)')
+    # plt.ylim(0, 100)  # Установка пределов по оси Y
+    plt.legend()
+
+    if filename is None:
+        filename = f"{ticker}_{period}_RSI_chart.png"
+
+    filepath = os.path.join(images_dir, filename)
+
+    plt.savefig(filepath)
+    print(f"График сохранен как {filename}")
+
+
 def create_and_save_plot(data, ticker, period, filename=None):
+    """
+    Создание и сохранение графика цены акций с течением времени.
+    :param data: DataFrame
+    :param ticker: торговая пара
+    :param period: торговый период
+    :param filename: имя файла для сохранения графика
+    :return:
+    """
     plt.figure(figsize=(10, 6))
 
     if "Date" not in data:

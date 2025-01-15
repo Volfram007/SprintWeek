@@ -51,11 +51,12 @@ def main():
     # Plot the data
     dplt.create_and_save_plot(stock_data, ticker, period)
 
+    # Добавляем построения графика RSI
+    dplt.save_rsi_plot(stock_data, ticker, period)
+
     # Вывод средней цены акции на закрытии
     average_price = dplt.calculate_and_display_average_price(stock_data)
-    print(
-        f"Средняя цена акций {ticker} за период {period} составляет {round(average_price, 3)}"
-    )
+    print(f"Средняя цена акций {ticker} за период {period} составляет {round(average_price, 3)}")
 
     # Вывод превышения колебаний цены
     threshold = float(input_text("Введите порог % колебания цены в данный период (дефолт, 5): ", "5", "float"))
